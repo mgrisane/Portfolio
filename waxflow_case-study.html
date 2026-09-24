@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{
+  dark: localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches),
+  scrolled: false,
+  mobileMenu: false,
+  progress: 0
+}" :class="{'dark':dark}" x-init="
+  $watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+  window.addEventListener('scroll', () => {
+    scrolled = window.scrollY > 20;
+    progress = Math.min(100, Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100));
+  }, { passive: true });
+" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Waxflow Riga- brand redesign case study"/>
+  <meta name="author" content="Madara Grišāne"/>
+  <meta property="og:title" content="Waxflow Riga brand redesign case study"/>
+  <meta property="og:type" content="article"/>
+  <title>Waxflow Riga-case study</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="glightbox-3.3.0\dist\css\glightbox.css"/>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+   
+    extend: {
+      fontFamily: { display: ['Lexend mega','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { accent: '#1F2EE8', 'accent-light': '#1F2EE8' }
+    }
+  }
+}
+</script>
+  <style>
+       *,*::before,*::after{box-sizing:border-box;}
+    html{font-family:'Lexend Mega',sans-serif;}
+    h1,h2,h3,h4,h5,h6{font-family:'Lexend Mega',sans-serif; text-transform:uppercase}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:'accent';border-radius:99px;}
+    body{transition:background-color .3s,color .3s;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+    .nav-link{position:relative;}
+    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
+    .nav-link:hover::after{width:100%;}
+    .btn-primary{position:relative;overflow:hidden;}
+    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}
+    .btn-primary:hover::after{left:160%;}
+    [x-cloak]{display:none!important;}
+    .photo-frame{overflow:hidden;background:#ffffff;}
+    .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+
+    /* Reading progress */
+    .progress-bar{position:fixed;top:0;left:0;height:3px;background: currentColor  ;z-index:100;transition:width .1s linear;}
+
+    /* Case study prose */
+    .prose-cs h2{font-family:'Lexend Mega',sans-serif;font-size:2rem;font-weight:700;margin:0 0 0.5rem;line-height:1.25;}
+    .prose-cs h3{font-family:'Lexend Mega',sans-serif;font-size:1.15rem;font-weight:700;margin:1rem 0 .6rem;line-height:1.3;}
+    .prose-cs p{margin:0 0 1.4rem;line-height:1.82;color:#393939;}
+    .dark .prose-cs p{color:#a1a1aa;}
+    .prose-cs ul{margin:0 0 1.4rem 1.5rem;list-style:disc;}
+    .prose-cs li{margin-bottom:.45rem;line-height:1.7;color:#393939;}
+    .dark .prose-cs li{color:#a1a1aa;}
+    .prose-cs blockquote{border-left:3px solid #1F2EE8;padding:.75rem 1.25rem;margin:0 0 1.8rem;background:#f5f4ff;border-radius:0 8px 8px 0;}
+    .dark .prose-cs blockquote{background:#27272a;}
+    .prose-cs blockquote p{color:#393939;font-style:italic;margin:0;}
+    .dark .prose-cs blockquote p{color:#a1a1aa;}
+    .prose-cs hr{border:none;border-top:1px solid #e4e4e7;margin:2.5rem 0;}
+    .dark .prose-cs hr{border-top-color:#27272a;}
+    .prose-cs a{color:#1F2EE8;text-decoration:underline;text-underline-offset:3px;}
+
+    /* Stat card */
+    .stat-card{border-left:3px solid #1F2EE8;}
+
+    /* Image caption */
+    .img-caption{font-size:.8rem;color:#a1a1aa;text-align:center;margin-top:.6rem;}
+
+    /* Step badge */
+    .step-badge{width:2rem;height:2rem;min-width:2rem;border-radius:50%;background:#27272a;color:#fff;font-family:'PT Sans',sans-serif;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;}
+
+    /* card hover */
+    .card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s;}
+    .card-h:hover{transform:translateY(-4px);}
+  </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased">
+
+  <!-- Reading progress bar -->
+  <div class="progress-bar" :style="`width:${progress}%`" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" aria-label="Reading progress"></div>
+
+  <!-- ═══ NAV ═══ -->
+  <header class="fixed top-0.5 left-0 right-0 z-50 transition-all duration-300"
+    :class="scrolled ? 'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5' : 'bg-transparent'">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <a href="index.html" class="font-display font-bold text-xl tracking-tight relative z-10">
+      <p class="text-sm text-zinc-900 dark:text-zinc-100 -mb-1">Madara Grišāne</p>
+    </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <li><a href="index.html#services" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+        <li><a href="index.html#work" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+        <li><a href="index.html#about" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="index.html#contact" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Light mode':'Dark mode'" aria-label="Light mode">
+        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path></svg>
+        <svg x-show="dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+      </button>
+        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
+          <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div x-show="mobileMenu" x-cloak
+      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium" role="list">
+        <li><a href="index.html#services" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+        <li><a href="index.html#work" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+        <li><a href="index.html#about" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="index.html#contact" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══ CASE STUDY HEADER ═══ -->
+    <article>
+   
+      <header class="pt-4 pb-10 max-w-5xl mx-auto px-6">
+        <!-- Back link -->
+        <a href="index.html#work" class="inline-flex mt-24 items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" aria-hidden="true"><path xmlns="http://www.w3.org/2000/svg" d="M10 13L5 8L10 3" stroke-width="1.5"/>></svg>
+          Back to works
+        </a>
+        <h1 class="font-display font-bold text-5xl md:text-4xl lg:text-6xl text-zinc-900 dark:text-white leading-tight mb-6">
+          Waxflow Riga
+        </h1>
+        <!-- Meta row -->
+        <div class="grid md:grid-cols-2 p-8  items-between  md:gap-16 ring ring-2 ring-zinc-900 dark:ring-zinc-500">
+          <div class="flex flex-col justify-between">
+            <p class="mb-4">Client is a certified waxing master seeking to grow her own waxing salon bussiness.</p>
+                 <div class="flex flex-wrap gap-2 mb-4">            
+                  <span data-i18n="tag_brand" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design</span>
+                  <span data-i18n="tag_social" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Social media</span>
+                  <span data-i18n="tag_print" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Print and advertisment</span>
+                </div> 
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white tracking-widest mb-1">Client</p>
+              <p class=" text-zinc-900 dark:text-white text-sm">Waxflow Riga</p>
+            </div>
+            <div>
+              <p class=" font-semibold text-zinc-900 dark:text-white tracking-widest mb-1">Role</p>
+              <p class="text-zinc-900 dark:text-white text-sm">Designer </p>
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white tracking-widest mb-1">Timeline</p>
+              <p class="text-zinc-900 dark:text-white text-sm">April-June 2026</p>
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white tracking-widest mb-1">Deliverables</p>
+              <p class="text-zinc-900 dark:text-white text-sm">Branding, Print, Social media templates</p>
+            </div>
+          </div>  
+        </div>
+      </header>
+
+   
+
+      <!-- ═══ RESULTS BANNER 
+      <div class="max-w-5xl mx-auto px-6 mb-16">
+        <div class="  grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class=" flex flex-col justify-end bottom-0 left-0 bg-zinc-900 w-7 h-full px-1 py-2 ">
+              <p class="text-xs text-nowrap text-zinc-50 -rotate-90 tracking-widest">// Result</p>
+            </div>
+          <div class="  grid  border border-zinc dark:bg-zinc-900 p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">−40%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Cognitive load (SUS score)</p>
+          </div>
+           <div class="  grid  border dark:bg-zinc-900 p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">−40%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Cognitive load (SUS score)</p>
+          </div>
+           <div class="  grid  border dark:bg-zinc-900 p-5 pl-6">
+            <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">−40%</p>
+            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-snug">Cognitive load (SUS score)</p>
+          </div>
+        </div>
+      </div>
+      ═══ -->
+      <!-- ═══ ARTICLE BODY ═══ -->
+      <div class="max-w-5xl  mx-auto px-6 pb-4 prose-cs">
+        <div class="grid grid-cols-1  md:grid-cols-2 gap-8 mb-16">
+            <div class="col-span-1 md:col-span-2">
+              <video width="full" height="auto" autoplay mute playsinline loop loading="eager">
+                 <source src="img\Portfolio Logo Anim_portfolio.mp4" type="video/mp4">
+                 <source src="img\Portfolio Logo Anim_portfolio.webm" type="video/webm">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            
+          <div  class="col-span-1">
+        <h2>Challenge</h2>
+        <p>Client had a weak understanding of how to position their business, what market niche to occupy. There was no business name.
+As new business, there where limiting budget options and a strong need to solve the right pain points to give a successful start to the business. 
+No target audience segmentation.</p>
+          </div>
+          <div class="col-span-1">
+        <h2>Impact</h2>
+      <p>Brand identity and assets based on research and client vision. Social media templates and posting strategies, as well as guidence on production and marketing.</p>
+          </div>
+          </div> 
+  
+
+        <div class="max-w-5xl mx-auto  mb-12">
+        <div class="grid grid-cols-2  gap-10 mb-16">
+          
+          <h2 class="col-span-2">Process &amp; Strategy</h2>
+          <!-- Step -->
+          <div class="col-span-2 flex gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">1</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white">Discovery</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">In-depth discussion about long-term and short-term goals. Pinpointing pain points, questions. Adjusting for future planned scale. Making a schedule for the development process.</p>
+            </div>
+          </div> 
+
+      
+         <div class="col-span-2 flex flex-col md:flex-row gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">2</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white mb-1">Market research</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Market  research  that in tandem with the owners vision  would act as the basis of the whole brand presence and marketing strategy. We looked at global and local tendencies, looking at the latest developments in the waxing industry, including analysing search trends over time.</p>
+            </div>
+            <div class="col-span-2 md:col-span-1 ">
+              <a href="img\img-market-research.png" class="glightbox aspect-3/2 object-fill">
+              <img  src="img\img-market-research.png" class="aspect-3/2" alt="Market tendencies research example" loading="lazy"/>
+              </a>
+              <p class="img-caption">Market research via search result analysis</p>
+            </div>
+          </div> 
+
+
+         <div class="col-span-2 flex flex-col md:flex-row gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">3</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white ">Competitor analysis</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Competitor analysis was conducted by comparative analysis, looking at both social media accounts (posting schedules, content types, branding, language usage, etc.) and local competitors (location, findability, services). Findings also inluded distinctions between various types of competitors- studios, individual practitioners and clinics.</p>
+            </div>
+            <div>
+            <a href="img\img-competitor-research.png" class="glightbox col-span-2 md:col-span-1 aspect-square object-cover">
+              <img  src="img\img-competitor-research.png" class="" alt="competitor analysis" loading="lazy"/>
+             </a>
+             <p class="img-caption">Competitor analysis</p>
+            </div>
+          </div> 
+
+          <div class="col-span-2 flex flex-col md:flex-row gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">4</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white ">Client analysis</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed"> Client analysis targeted potential client segments through different persona charts and their respective customer journeys, pinpointing relevant touchpoints that could be used in marketing and service design. 5 persona charts exploring different client profiles (age, gender, pain points, most attractive services) and their user journeys.</p>
+            </div>
+            <div>
+            <a href="img\img-user-journey.png" class="glightbox col-span-2 md:col-span-1 ">
+              <img  src="img\img-user-journey.png" alt="User journey" loading="lazy"/>
+             </a>
+             <p class="img-caption">User jouney research</p>
+            </div>
+          </div> 
+          <div class="col-span-2 flex flex-col md:flex-row gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">5</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white ">Service design</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Service design aimed to synthesize the above mentioned data with the business owners own preferences to maximize their reach. We discussed which channels to prioritize and how automate customer interactions and where it was needed. Online, for example, it was through the reservation system, linkedtree page (hubbing together all relavant links in one page). For the actual service, it was an initial printed questionnaire.</p>
+            </div>
+            <div>
+            <a href="img\img-marketing-strategy.png" class="glightbox col-span-2 md:col-span-1 ">
+              <img  src="img\img-marketing-strategy.png" alt="competitor analysis" loading="lazy"/>
+             </a>
+             <p class="img-caption">Touchpoint flowchart</p>
+            </div>
+          </div>
+          <div class="col-span-2 flex flex-col md:flex-row gap-5 bg-zinc-50 dark:bg-zinc-900  p-6 border border-zinc-700 dark:border-zinc-800">
+            <div class="step-badge shrink-0 mt-0.5">6</div>
+            <div class="md:max-w-[400px]">
+              <p class="font-display font-bold text-zinc-900 dark:text-white ">Brand design and social media design, handoff</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Brandbook and social media templates for Canva and Capcut. Training in Meta Bussiness Suite and it's usage.  Multiple cheatsheets to help in content creation. Initial oversight over content creation.</p>
+            </div>
+            <div>
+            <a href="img\img-insta-grid.png" class="glightbox col-span-2 md:col-span-1 ">
+              <img  src="img\img-insta-grid.png" alt="competitor analysis" loading="lazy"/>
+             </a>
+             <p class="img-caption"> Instagram grid buillding principle</p>
+            </div>
+          </div>  
+        </div>
+      </div>
+ 
+     <div class="grid md:grid-cols-2 gap-8 mb-16">
+           <div>
+        <h2>Key insights</h2>
+        <p>In a saturated market with a lot of competition and service alternatives, the waxing salons key differentiating factor should be clients perceived comfort.</p>
+        <p>Discoverability is the main concern- business should focus on SEO, particularly Google maps, alongside content creation on Instagram and Facebook.</p>
+      </div>
+      <div >
+        <h2>Solutions</h2>
+        <ol type="1" class="list-decimal list-inside">
+          <li>Brand identity focusing on easing clients fears- professional, approachable, clean.</li>
+          <li>Business name that would rank high in google search, social media tag groups that would help target local customers.</li>
+          <li>Target new customers that haven’t used waxing service before and/or don’t have their service provider.</li>
+        </ol>
+      </div>
+          </div> 
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-24">
+        <div class="col-span-2 md:col-span-3">
+        <h2>Branding</h2>
+        </div>
+        <div class="col-span-2 md:col-span-2">
+          <h3>Context</h3>
+          <p>Client searched to convey  professionalism and approachability, aligning with the brand's values of trust and quality. In tandem with the branding strategy a logo and brand assets were designed.</p>
+        </div>
+        <div class="col-span-2 md:col-span-2 md:col-start-2">
+          <h3>Key design decisions</h3>
+            <p> After synthesizing research and brainstorming, brand name "Waxflow Riga" was selected, incorporating three elements: "wax" for waxing, "flow" as a nod to the owners last name and "Riga" to help establish local presence and help with SEO.</p>
+            <p>We explored several moodboards, but the final brand identity focused on a modern aesthetic, clean lines and nods to flora conveying a sense of natural beauty and tranquility for the busy everyday woman. </p>
+        </div>
+              <a href="img/img-waxflow-gallery-0.png" class="glightbox col-span-2 md:col-span-3">
+                <img src="img/img-waxflow-gallery-0.png" alt="Waxflow-logo" loading="lazy"/>
+              </a>
+              <a href="img/img-waxflow-gallery-1-1.png" class="glightbox col-span-2 md:col-span-1">
+                <img src="img/img-waxflow-gallery-1-1.png" alt="Waxflow-logo" loading="lazy"/>
+              </a>
+              <a href="img/img-waxflow-gallery-1-2.png" class="glightbox col-span-1 md:col-span-1">
+                <img src="img/img-waxflow-gallery-1-2.png" alt="Waxflow-logo" loading="lazy"/>
+              </a>
+              <a href="img/img-waxflow-gallery-1-3.png" class="glightbox col-span-1 md:col-span-1">
+                <img src="img/img-waxflow-gallery-1-3.png" alt="Waxflow-logo" loading="lazy"/>
+              </a>
+              <a href="img/img-waxflow-gallery-2-1.png" class="glightbox col-span-2 md:col-span-3">
+                <img src="img/img-waxflow-gallery-2-1.png" alt="Waxflow-logo" loading="lazy"/>
+              </a>
+            <a href="img\img-waxflow-gallery-3-1.png" class="glightbox col-span-2 md:col-span-1">
+                <img  src="img\img-waxflow-gallery-3-1.png" alt="Waxflow logo" loading="lazy"/>
+            </a>
+            <a href="img\img-waxflow-gallery-3-2.png" class="glightbox col-span-2 md:col-span-2">
+              <img  src="img\img-waxflow-gallery-3-2.png" alt="Waxflow bussiness card" loading="lazy"/>
+            </a>
+        </div>     
+          
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mb-24">
+          <div class="col-span-2 md:col-span-3">
+          <h2>Social media</h2>
+        </div>
+        <div class="col-span-2 md:col-span-2">
+          <h3>Context</h3>
+          <p>The goal was to allow the client to manage their online presence independently, providing professional templates, design elements and relevant training as well as the initial account setup and help in post creation. To ease the clients way into content creation the client was provided with supplementary materials like a story board template and post making cheat sheet. </p>
+        </div>
+        <div class="col-span-2 md:col-span-2 md:col-start-2">
+          <h3>Key design decisions</h3>
+          <p>Canva based post templates for various post and story types were prepared.
+  For video based editing multiple animated, including title cards and signoff was made for later editing in Capcut.</p>
+        </div>
+          <a href="img\img-waxflow-gallery-4-1.png" class="glightbox col-span-2 md:col-span-3">
+                <img  src="img\img-waxflow-gallery-4-1.png" alt="Waxflow social media mock up" loading="lazy"/>
+          </a>
+              <a href="img\img-waxflow-gallery-5-1.png" class="glightbox col-span-1 md:col-span-1">
+                <img  src="img\img-waxflow-gallery-5-1.png" alt="Waxflow social media mock up" loading="lazy"/>
+              </a>
+              <a href="img\img-waxflow-gallery-5-2.png" class="glightbox col-span-1 md:col-span-1">
+                <img  src="img\img-waxflow-gallery-5-2.png" alt="Waxflow instagram desktop mock up" loading="lazy"/>
+              </a>
+              <a href="img\img-waxflow-gallery-5-3.png" class="glightbox col-span-1 md:col-span-1">
+                <img  src="img\img-waxflow-gallery-5-3.png" alt="Waxflow instagram desktop mock up" loading="lazy"/>
+              </a>
+              <a href="img\img-waxflow-gallery-6-2.png" class="glightbox col-span-1 md:col-span-1">
+                <img  src="img\img-waxflow-gallery-6-2.png" alt="Waxflow ad mock up" loading="lazy"/>
+              </a>
+              <a href="img\img-waxflow-gallery-6-1.png" class="glightbox col-span-2 md:col-span-2">
+                <img  src="img\img-waxflow-gallery-6-1.png" alt="Waxflow facebook desktop mock up" loading="lazy"/>
+              </a>
+            </div>  
+        </div>  
+          
+      </div>
+    </article>
+
+    <!-- ═══ MORE PROJECTS ═══ -->
+    <section class="bg-zinc-50 dark:bg-zinc-900/50 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class=" font-display font-bold text-2xl text-zinc-900 dark:text-white">Next project</h2>
+          <a href="index.html#work" class="flex justify-center gap-2 text-sm font-medium text-zinc-900 dark:text-white nav-link">View all <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" aria-hidden="true"><path xmlns="http://www.w3.org/2000/svg" d="M6 3L11 8L6 13" stroke-width="1.5"/></svg></a>
+        </div>
+       <article
+                            class="card-h col-span-3 relative md:items-center  overflow-hidden ring-2 ring-zinc-900 dark:ring-zinc-700 hover:bg-[#C60038] hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95 md:row-span-2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12" 
+                                                   
+                        >
+         <a href="iko_case-study.html"> </a>
+        <div class="absolute flex flex-col justify-end bottom-0 right-0 bg-zinc-900 dark:bg-zinc-700 w-7 h-full px-1 py-2 ">
+              <p class="text-xs text-nowrap text-zinc-300 -rotate-90 tracking-widest">[case study]</p>
+            </div>
+      <div class="grid md:grid-cols-2 items-between pe-8">
+      <div class=" md:max-w-1/2 md:max-h-full order-1 overflow-hidden">
+        <a href="iko_case-study.html">
+          <img class="h-auto" src="img\img-card-iko.png" alt="iko_case_study" loading="lazy">
+        </a>
+        </div>
+        <div class="flex flex-col justify-center p-4 order-2 ">
+          <h3 class="font-display text-end md:text-start text-4xl font-bold mb-2"><a href="iko_case-study.html" class="nl">IKO</a></h3>
+          <p class="text-sm mb-4 text-end md:text-start">How signage helps guide and elevate self-service experience for customers.</p>
+           <div class="flex justify-end md:justify-start flex-wrap gap-2 mb-4">            
+             <span data-i18n="tag_branding" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design</span>
+              <span data-i18n="tag_packaging" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Packaging</span>
+              <span data-i18n="tag_print" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Print and advertisment</span>
+          </div> 
+      </div>   
+       </article>
+      </div>
+    </section>
+  </main>
+
+<footer class="bg-zinc-900">
+  <div class="max-w-6xl gap-4 mx-auto px-6 py-8">
+    <ul class="flex flex-wrap gap-4 justify-center mb-4">
+      <li><a href="mailto:mgrisane@gmail.com" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-sm uppercase " >mgrisane@gmail.com</a></li>
+      <span class="text-zinc-100">|</span>
+      <li><a href="https://www.linkedin.com/in/madara-gri%C5%A1%C4%81ne/" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-zinc-100 text-sm uppercase " >LinkedIn</a></li>
+    </ul>
+    <div class="flex flex-wrap gap-2 justify-center items-center">
+      <p data-i18n="footer" class="text-sm text-zinc-400 text-center">© <span id="yr"></span> Madara Grišāne. All rights reserved.</p>
+      <a data-i18n="footer_privacy" href="privacy-policy.html" class="block inline-block text-sm text-center text-zinc-400 hover:text-zinc-100 underline">Privacy policy</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+    <script src="glightbox-3.3.0\dist\js\glightbox.js"></script>
+  <script type="text/javascript">
+  const lightbox = GLightbox({ loop: true, });
+</script>
+
+</body>
+</html>

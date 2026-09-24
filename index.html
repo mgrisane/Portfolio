@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" :class="{'dark':dark}" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Fast, clean and accessible digital products">
+<meta name="keywords" content="graphic designer, web designer, portfolio">
+<meta name="author" content="Madara Grišāne">
+<meta property="og:title" content="Madara Grišāne — Graphic &amp; web designer">
+<meta property="og:description" content="I design and build digital products that are fast, clean and accessible.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mgrisane.online">
+<title>Madara Grišāne — Graphic &amp; web designer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="glightbox-3.3.0\dist\css\glightbox.css"/>
+<link rel="stylesheet" href="stylesheet.css"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="icon" type="image/x-icon" href="favicon-32x32.png">
+
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: { display: ['Lexend mega','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { accent: '#1F2EE8', 'accent-light': '#1F2EE8' },
+    },
+
+  }
+}
+</script>
+
+
+
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{font-family:'Inter',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'Legend Mega',sans-serif}
+body{transition:background-color .3s,color .3s}
+
+/* noise overlay */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+    .progress-bar{position:fixed;top:0;left:0;height:3px;background: #1F2EE8 ;z-index:100;transition:width .1s linear;}
+::-webkit-scrollbar-thumb{background:#1F2EE8;border-radius:99px}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal_left{opacity:0;transform:translateX(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal_right{opacity:0;transform:translateX(-26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* nav underline animation */
+.nl{position:relative}
+.nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .22s cubic-bezier(.4,0,.2,1)}
+.nl:hover::after,.nl.on::after{width:100%}
+.nl.on{font-weight:700}
+
+/* shimmer button */
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+.shimmer:hover::after{left:160%}
+
+/* photo frames */
+.pf{overflow:hidden;background:#d4d4d8}
+.pf img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* card hover */
+.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),drop-shadow(0 0 0.75rem crimson), border-color .18s }
+.card-h:hover{transform:translateY(-4px), ;}
+
+/* skill tag */
+.stag{transition:border-color .18s}
+
+
+/* Glassmorphism effect */
+        .glass {
+            background: rgba(226, 228, 238, 0.074);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);}
+
+
+[x-cloak]{display:none!important}
+
+</style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+<!-- ═══ NAV ═══ -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc?'bg-white/90 text-zinc-900 dark:bg-zinc-950/90 dark:text-zinc-100 backdrop-blur-md shadow-sm shadow-black/5':''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+    <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
+      <p class="text-sm uppercase text-zinc-900 dark:text-zinc-100 -mb-1">Madara Grišāne</p>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+      <li><a href="#services" id="menu_services" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='services'?'on !text-zinc-900 dark:!text-white':''">Services</a></li>
+      <li><a href="#work" id="menu_work" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='work'?'on !text-zinc-900 dark:!text-white':''">Work</a></li>
+      <li><a href="#about" id="menu_about" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a></li>
+      <li><a href="#contact" id="menu_contact" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors" :class="s==='contact'?'on !text-zinc-900 dark:!text-white':''">Contact</a></li>
+    </ul>
+
+
+
+
+ <!--darktoggle-->
+    <div class="flex items-center gap-3">
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Light mode':'Dark mode'">
+        <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg x-show="dark"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      </button>
+      <!-- hamburger -->
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" :aria-expanded="mm" aria-label="Toggle menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg x-show="mm"  class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <div x-show="mm" x-cloak
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+    class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <ul class="flex flex-col px-6 pt-5 gap-4 text-sm font-medium" role="list">
+      <li><a href="#services" data-i18n="menu_services" @click="mm=false" class="block uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+      <li><a href="#work"    data-i18n="menu_work" @click="mm=false" class="block uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+      <li><a href="#about"  data-i18n="menu_about" @click="mm=false" class="block uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+      <li><a href="#contact" data-i18n="menu_contact" @click="mm=false" class="block uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="relative md:min-h-screen min-h-[560px] w-full grid content-end pt-16 overflow-hidden">
+   <div class="absolute top-0 left-0 w-full h-full">
+      <canvas id ='canv' class="canv absolute top-0 left-0 w-full h-full "></canvas>
+     </div>
+       <div class="reveal d1 slider ring-2 ring-zinc-900 dark:ring-zinc-400 ">
+      <div class="slide-track2">
+        <a href="kanepite_case-study.html" >
+          <img src="img/img-waxflow-gallery-4-1.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="waxflow_case-study.html" >
+          <img src="img/img-kanepite-gallery-6.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="iko_case-study.html" >
+          <img src="img/img-iko-gallery-14.png" class="object-cover overflow-hidden slide">
+        </a>
+        </a>
+        <a href="#tab-2" >
+          <img src="img/home-gallery-2.jpg" class="object-cover overflow-hidden slide">
+        </a>
+
+        <!-- same 5 slides doubled (duplicate)-->
+        <a href="kanepite_case-study.html" >
+          <img src="img/img-waxflow-gallery-4-1.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="waxflow_case-study.html" >
+          <img src="img/img-kanepite-gallery-6.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="iko_case-study.html" >
+          <img src="img/img-iko-gallery-14.png" class="object-cover overflow-hidden slide">
+        </a>
+         <a href="#tab-2" >
+          <img src="img/home-gallery-2.jpg" class="object-cover overflow-hidden slide">
+        </a>
+        <!-- same 5 slides tripled (duplicate 2)-->
+        <a href="kanepite_case-study.html" >
+          <img src="img/img-waxflow-gallery-4-1.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="waxflow_case-study.html" >
+          <img src="img/img-kanepite-gallery-6.png" class="object-cover overflow-hidden slide">
+        </a>
+        <a href="#tab-2" >
+          <img src="img/home-gallery-2.jpg" class="object-cover overflow-hidden slide">
+        </a>
+
+        
+      </div>
+    </div>
+    <h1 class=" absolute bottom-0 left-0 text-white dark:text-black">
+        Madara Grišāne 
+    </h1> 
+  <div class=" relative z-10 max-w-6xl mx-auto mb-4 w-full">
+    </div>
+      <div class="reveal relative z-10  pb-4 pt-4 px-6">
+      <img src="img\img-h1-2.png" class="block dark:hidden object-fill " aria-hidden="true">      
+      <img src="img\img-h1-2_dark.png" class="hidden dark:block object-fill " aria-hidden="true">
+     </div>  
+    </div>       
+   <div class="relative z-10 flex flex-col md:flex-row gap-2 px-6 py-4 md:items-center justify-between bg-zinc-900 dark:bg-zinc-700 text-zinc-100 dark:text-zinc-100">
+    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+       <p id="hero_banner_1" class="focus-in-expand display-block text-left uppercase font-normal text-md md:text-xl font-light tracking-wide">
+        Graphic &amp; Web designer  
+        </p>
+         <span class="focus-in-expand display-block text-left uppercase font-normal text-md md:text-xl font-light tracking-wide">
+        |
+         </span>
+        <p data-i18n="hero_banner_2" class="focus-in-expand display-block text-left uppercase font-normal text-md md:text-xl font-light tracking-wide">
+        Based in Riga, Latvia
+        </p>
+    </div>
+       
+        <button>
+          <a href="#work" data-i18n="btn_seeWork" class="shimmer uppercase flex justify-center items-center rounded-full border text-center gap-2 py-2 px-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
+            View my work
+         </a>
+        </button> 
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services" class="relative py-16 md:py-24 bg-zinc-50 dark:bg-zinc-900/40">
+       <div class="absolute top-0 right-6 left-6 w-auto z-10 opacity-15">
+        <img src="img/img-about.png" aria-hidden="true">
+      </div>
+  <div class="max-w-6xl mx-auto px-6 relative z-20">
+
+    <div class="grid grid-cols-3 gap-1 mb-12">
+      <div class="col-span-3 lg:col-span-2">
+      <p data-i18n="what" class="text-xs font-small text-black dark:text-white tracking-widest uppercase mb-2">[What do I do]</p>
+      <h2 data-i18n="services_h2" class="reveal font-display font-bold uppercase text-4xl md:text-5xl text-zinc-900 dark:text-white">Crafting designs for your business growth</h2>
+      </div>
+    </div>
+    
+    <div class="flex flex-col md:flex-row justify-end gap-6 ">
+      <article class="reveal card-h md:w-1/3 lg:w-1/4 ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-50 dark:bg-zinc-900/40 content-between">
+        <div class=" bg-zinc-900 dark:bg-zinc-700">
+          <p class="text-xs text-zinc-300 px-4 py-1">// 01</p>
+        </div>
+        <div class="p-4 mt-4">
+          <h3 data-i18n="services_modal_1h" class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Graphic Design &amp; Branding</h3>
+        <p data-i18n="services_modal_1p" class="text-sm text-zinc-900 dark:text-zinc-400 leading-relaxed">Logos, branding, digital and print design, strategy and research</p>
+        </div>        
+      </article>
+       <article class="reveal d2 card-h md:w-1/3 lg:w-1/4 ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-50 dark:bg-zinc-900/40 content-between">
+        <div class=" bg-zinc-900 dark:bg-zinc-700">
+          <p class="text-xs  text-zinc-300 px-4 py-1">// 02</p>
+        </div>
+        <div class="p-4 mt-4">
+          <h3 data-i18n="services_modal_2h" class="font-display font-bold text-xl text-zinc-900 dark:ring-zinc-700 dark:text-white mb-2"> WEB &amp; UI/UX Design</h3>
+        <p data-i18n="services_modal_2p" class="text-sm text-zinc-900 dark:text-zinc-400 leading-relaxed"> UX/UI design, research, and no-code web development</p>
+        </div>
+      </article>
+        <article class="reveal d3 card-h md:w-1/3 lg:w-1/4 ring-2 ring-zinc-900 dark:ring-zinc-700  bg-zinc-50 dark:bg-zinc-900/40 content-between">
+        <div class="bg-zinc-900 dark:bg-zinc-700">
+          <p class="text-xs  text-zinc-300 px-4 py-1">// 03</p>
+        </div>
+        <div class="p-4 mt-4">
+          <h3 data-i18n="services_modal_3h" class="font-display font-bold text-xl text-zinc-900  dark:text-white mb-2"> Social media design</h3>
+        <p data-i18n="services_modal_3p" class="text-sm text-zinc-900 dark:text-zinc-400 leading-relaxed">Social media graphics, templates, video editing</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WORK ═══ -->
+<section id="work" class="py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-6">   
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+      <div>
+        <p class="reveal text-xs font-small text-black dark:text-white tracking-widest uppercase mb-2">[Portfolio]</p>
+        <h2 data-i18n="work" class="reveal d1 font-display font-bold uppercase text-4xl md:text-5xl text-zinc-900 dark:text-white mb-4">Selected work</h2>
+        <p data-i18n="work_p" class="reveal d2 max-w-[560px]">Few of my works over the years. Explore in-depth case studies for bigger projects to see my process or browse smaller projects.</p>
+      </div>
+    </div>
+<!-- Tabs component -->
+            <div x-data="{ activeTab: 1 }" class="reveal">
+            
+                <!-- Buttons -->
+                <div class="flex justify-start">
+                    <div
+                        role="tablist"
+                        class="max-[480px]:max-w-[240px] inline-flex flex-wrap justify-center ring-2 ring-zinc-700 p-1 mb-8 min-[480px]:mb-12"
+                        @keydown.right.prevent.stop="$focus.wrap().next()"
+                        @keydown.left.prevent.stop="$focus.wrap().prev()"
+                        @keydown.home.prevent.stop="$focus.first()"
+                        @keydown.end.prevent.stop="$focus.last()"
+                    >
+                        <!-- Button #1 -->
+                        <button
+                            id="tab-1"
+                            data-i18n="work_tab1"
+                            class="flex-1 text-sm font-medium h-8 px-4  whitespace-nowrap focus-visible:outline-none focus-visible:ring focus-visible:ring-accent transition-colors duration-150 ease-in-out"
+                            :class="activeTab === 1 ? 'bg-zinc-900 text-zinc-100' : 'text-zinc-700 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-zinc-300'"
+                            :tabindex="activeTab === 1 ? 0 : -1"
+                            :aria-selected="activeTab === 1"
+                            aria-controls="tabpanel-1"
+                            @click="activeTab = 1"
+                            @focus="activeTab = 1"
+                        >case studies</button>
+                        <!-- Button #2 -->
+                        <button
+                            id="tab-2"
+                            data-i18n="work_tab2"
+                            class="flex-1 text-sm font-medium h-8 px-4 whitespace-nowrap focus-visible:outline-none focus-visible:ring focus-visible:ring-accent transition-colors duration-150 ease-in-out"
+                            :class="activeTab === 2 ? 'bg-zinc-900 text-zinc-100' : 'text-zinc-700 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-zinc-300'"
+                            :tabindex="activeTab === 2 ? 0 : -1"
+                            :aria-selected="activeTab === 2"
+                            aria-controls="tabpanel-2"
+                            @click="activeTab = 2"
+                            @focus="activeTab = 2"
+                        >projects</button>
+                    </div>
+                </div>
+
+                <!-- Tab panels -->
+                <div class="mx-auto">
+                    <div class="relative grid grid-cols-2 md:grid-cols-3 gap-4">
+
+                        <!-- Panel #1 -->
+                        <article
+                            id="tabpanel-1"
+                            class="card-h col-span-3 relative md:items-center  overflow-hidden ring-2 ring-zinc-900 dark:ring-zinc-700 hover:bg-[#9EA571] hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95 md:row-span-2"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 1"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12" 
+                                                   
+                        >
+                          <div class="absolute flex flex-col justify-end bottom-0 right-0 bg-zinc-900 dark:bg-zinc-700 w-7 h-full px-1 py-2 ">
+                                <p class="text-xs text-nowrap text-zinc-300 -rotate-90 tracking-widest">[case study]</p>
+                              </div>
+                        <div class="grid md:grid-cols-2 items-between pe-8">
+                        <div class=" md:max-w-1/2 md:max-h-full order-1 overflow-hidden">
+                          <a href="waxflow_case-study.html">
+                            <img class="h-auto" src="img\img-card-waxflow.png" alt="Waxflow_case_study" loading="lazy">
+                          </a>
+                          </div>
+                          <div class="flex flex-col items-end md:justify-center p-4 order-2">
+                          <div class="flex flex-col justify-end order-2 max-w-[400px]">
+                            <h3 class="font-display text-end md:text-start text-4xl font-bold mb-2"><a href="waxflow_case-study.html" class="nl">WaxFlow Riga</a></h3>
+                            <p data-i18n="caseStudy_waxflow" class="text-sm mb-4 text-end md:text-start">Exploring how integrating design from the very start of the business journey can boost outcomes.</p>
+                            <div class="flex justify-end md:justify-start flex-wrap gap-2 mb-4">            
+                              <span data-i18n="tag_brand" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design</span>
+                              <span data-i18n="tag_social" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Social media</span>
+                              <span data-i18n="tag_print" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Print and advertisment</span>
+                            </div> 
+                            </div>
+                            </div>
+                        </div>   
+                      </article>
+                           <article
+                            id="tabpanel-1"
+                            class="card-h col-span-3 relative md:items-center  overflow-hidden ring-2 ring-zinc-900 dark:ring-zinc-700 hover:bg-[#C60038] hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95 md:row-span-2"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-1"
+                            x-show="activeTab === 1"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12" 
+                                                   
+                        >
+         <a href="iko_case-study.html"> </a>
+        <div class="absolute flex flex-col justify-end bottom-0 right-0 bg-zinc-900 dark:bg-zinc-700 w-7 h-full px-1 py-2 ">
+              <p class="text-xs text-nowrap text-zinc-300 -rotate-90 tracking-widest">[case study]</p>
+            </div>
+      <div class="grid md:grid-cols-2 items-between pe-8">
+      <div class=" md:max-w-1/2 md:max-h-full order-1 overflow-hidden">
+        <a href="iko_case-study.html">
+          <img class="h-auto" src="img\img-card-iko.png" alt="iko_case_study" loading="lazy">
+        </a>
+        </div>
+       <div class="flex flex-col items-end md:justify-center p-4 order-2 ">
+        <div class="flex flex-col justify-end order-2 max-w-[400px]">
+          <h3 class="font-display text-end md:text-start text-4xl font-bold mb-2"><a href="iko_case-study.html" class="nl">IKO</a></h3>
+          <p data-i18n="caseStudy_iko" class="text-sm mb-4 text-end md:text-start">How signage helps guide and elevate self-service experience for customers. </p>
+           <div class="flex justify-end md:justify-start flex-wrap gap-2 mb-4">            
+             <span data-i18n="tag_branding" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design</span>
+              <span data-i18n="tag_packaging" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Packaging</span>
+              <span data-i18n="tag_print" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Print and advertisment</span>
+          </div> 
+          </div>
+          </div>
+      </div>   
+      </article>
+
+                         <article
+                            id="tabpanel-1"
+                            class="card-h col-span-3 relative md:items-center  overflow-hidden ring-2 ring-zinc-900 dark:ring-zinc-700 hover:bg-[#262809] hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95 md:row-span-2"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-3"
+                            x-show="activeTab === 1"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12" 
+                                                   
+                        >
+         <a href="kanepite_case-study.html"> </a>
+        <div class="absolute flex flex-col justify-end bottom-0 right-0 bg-zinc-900 dark:bg-zinc-700 w-7 h-full px-1 py-2 ">
+              <p class="text-xs text-nowrap text-zinc-300 -rotate-90 tracking-widest">[case study]</p>
+            </div>
+      <div class="grid md:grid-cols-2 items-between pe-8">
+      <div class=" md:max-w-1/2 md:max-h-full order-1 overflow-hidden">
+        <a href="kanepite_case-study.html">
+          <img class="h-auto" src="img\img-card-kanepite.png" alt="Kanepite_case_study" loading="lazy">
+        </a>
+        </div>
+        <div class="flex flex-col items-end md:justify-center p-4 order-2 ">
+        <div class="flex flex-col justify-end order-2 max-w-[400px]">
+          <h3 class="font-display text-end md:text-start text-4xl font-bold mb-2"><a href="kanepite_case-study.html" class="nl">Kaņepīte</a></h3>
+          <p data-i18n="caseStudy_kanepite" class="text-sm mb-4 text-end md:text-start">Helping a small business owner start e-commerce and rewamp their brand.</p>
+          <div class="flex justify-end md:justify-start flex-wrap gap-2 mb-4">            
+             <span data-i18n="tag_branding" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design</span>
+              <span data-i18n="tag_packaging" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Packaging</span>
+              <span data-i18n="tag_web" class="text-sm bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Web design</span>
+          </div> 
+          </div>
+          </div>
+      </div>   
+                        </article>
+                        <!-- Panel #2 -->
+                        <article
+                            id="tabpanel-2"
+                            class="mb-2 w-full  min-[480px]:mb-2 hover:border-zinc-900  hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                         
+                        <a href="img\home-gallery-1.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-1.jpg" alt="Label and instruction design for Kopaa" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2  py-1 text-xs tracking-widest">
+                            <p data-i18n="work_Koppa" class=" f text-md py-1 text-right">Label and instruction design for Kopaa</p>
+                          </div>
+                        </article>
+                         <article
+                            id="tabpanel-2"
+                            class="mb-2 w-full min-[480px]:mb-2 hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-2.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-2.jpg" alt="Bussiness card" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900  bg-zinc-900 dark:bg-zinc-700 dark:ring-zinc-700 text-zinc-100 px-2  py-1 text-xs tracking-widest">
+                            <p data-i18n="work_autolab" class="text-md py-1 text-right">Bussiness card for Autolab Detailing</p>
+                          </div>
+                        </article>
+                          <article
+                            id="tabpanel-2"
+                            class="mb-2 w-full min-[480px]:mb-2 hover:border-zinc-900   hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-3.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-3.jpg" alt="Logo for MansSkaistums" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2 py-1 text-xs tracking-widest">
+                            <p data-i18n="work_MansSkaistums" class="text-md py-1 text-right">Logo for MansSkaistums</p>
+                          </div>
+                        </article>
+                          <article
+                            id="tabpanel-2"
+                            class="mb-2 w-full min-[480px]:mb-2 hover:border-zinc-900 dark:bg-zinc-700 hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-4.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-4.jpg" alt="Leaflet design" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2 py-1 text-xs tracking-widest">
+                            <p data-i18n="work_precetev" class="text-md py-1 text-right">Leaflet design for PreceTev.lv</p>
+                          </div>
+                        </article>
+                          <article
+                            id="tabpanel-2"
+                            class="mb-2 col-span-2 w-full min-[480px]:mb-2 hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-5.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-5.jpg" alt="LIAA support landing page design for SEM" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700  bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2 py-1 text-xs tracking-widest ">
+                            <p data-i18n="work_Sem" class="text-md py-1 text-right">LIAA support landing page design for SEM.lv</p>
+                          </div>
+                        </article>
+                          <article
+                            id="tabpanel-2"
+                            class="mb-2 col-span-2 w-full min-[480px]:mb-2 overflow-clip hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-6.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img src="img\home-gallery-6.jpg" alt="MO services website design" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2 py-1 text-xs tracking-widest">
+                            <p data-i18n="work_Mo" class="text-md py-1 text-right">MO Services website design</p>
+                          </div>
+                        </article>
+                          <article
+                            id="tabpanel-2"
+                            class="mb-2 w-full min-[480px]:mb-2 hover:border-zinc-900   hover:text-white transition delay-150 duration-300 ease-in-out hover:scale-95"
+                            role="tabpanel" 
+                            tabindex="0"
+                            aria-labelledby="tab-2"
+                            x-show="activeTab === 2"
+                            x-transition:enter="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-700 transform order-first"
+                            x-transition:enter-start="opacity-0 -translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-[cubic-bezier(0.68,-0.3,0.32,1)] duration-300 transform absolute"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-12"                        
+                        >
+                        <a href="img\home-gallery-7.jpg" class="overflow-hidden content-center object-cover glightbox"> 
+                          <img  src="img\home-gallery-7.jpg" alt="Logo concept for Namdaris" loading="lazy" h-[540px] class="ring-2 ring-zinc-900 dark:ring-zinc-700">
+                        </a>
+                        <div class="ring-2 ring-zinc-900 dark:ring-zinc-700 bg-zinc-900 dark:bg-zinc-700 text-zinc-100 px-2 py-1 text-xs tracking-widest">
+                            <p data-i18n="work_Namdaris" class="text-md py-1 text-right">Logo concept for Namdaris</p>
+                          </div>
+                        </article>
+
+                    </div>
+                </div>
+            
+            </div>
+            <!-- End: Tabs component -->     
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" >
+  <div class="relative py-16 md:py-24 bg-zinc-100 dark:bg-zinc-900">
+      <div class="z-2 absolute bottom-0 right-6 left-6 w-auto z-10 opacity-10 rotate-[180deg]">
+        <img src="img/img-about.png" aria-hidden="true">
+      </div>
+    <div class="relative z-10 flex flex-wrap gap-8 md:gap-16 px-6 justify-center items-center">
+     <div class="reveal d1 order-1 md:order-1 overflow-hidden rounded-full ring-4 ring-zinc-900 dark:ring-zinc-700 max-w-[350px] max-h-[400px]">
+      <img src="img\img-about (2).png" alt="A womans portrait" loading="lazy" class="mask-radial-at-center  overflow-hidden object-cover ring-4 ring-zinc-900 dark:ring-zinc-700">
+      </div> 
+       <div class="col-span-1 order-1 md:order-2 max-w-[500px]">
+        <p data-i18n="about_about" class="reveal text-xs font-medium tracking-widest uppercase mb-2">[About me]</p>
+        <h2 data-i18n="about_h" merge class="reveal d1 font-display uppercase font-bold text-4xl md:text-5xl  dark:text-white leading-tight mb-6">A bit <br> about me</h2>
+        <p data-i18n="about_p1" class="reveal d2 dark:text-zinc-100 leading-relaxed pb-1">Hi, I`m Madara, a graphic and web designer based in Riga, Latvia. With over 5 years of experience, I specialize in creating branding, print materials and user-friendly digital products that help businesses grow andz succeed.</p>
+        <p data-i18n="about_p2" class="reveal d2 dark:text-zinc-100 leading-relaxed">When not designing, you can find me neck-deep in a crafting project, a book or at a metal concert.</p>
+
+      </div> 
+      </div>
+  </div>
+    <div class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+     <div class="grid grid-cols-1 md:grid-cols-2 justify end gap-8 justify-between items-right">
+      <span class="reveal invisible md:visible relative bg-center h-1/2 md:h-full">
+        <img src="img\img-home-circle.png" class="absolute top-0 right-0 display:hidden md:display-block h-full object-contain" aria-hidden="true">
+      </span>
+      <div id="skills" class="w-full h-full">
+         <h3 data-i18n="skills" class="reveal d1  font-display font-bold uppercase text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-6">Skills &amp;<br> Tech Stack</h3>
+          <!-- Accordion Item 1 -->
+           <div class="reveal d2 grid d1 gap-1  mb-6 md:mb-0 in">
+<div class="reveal d2 bg-zinc-900 text-zinc-900">
+  <button onclick="toggleAccordion(1)" class="w-full flex justify-between items-center py-3 px-4  bg-zinc-900 text-zinc-100">
+    <h4 data-i18n="about_dd1" class="font-medium">// 01 Graphic Design</h4>
+    <span id="icon-1" class="text-zinc-100 transition-transform duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+      </svg>
+    </span>
+  </button>
+  <div id="content-1" class="max-h-0 overflow-hidden transition-all bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-700  duration-300 ease-in-out">
+    <div class="pb-5 text-sm mt-4 px-4 text-zinc-900 dark:text-white">
+      <p class="font-bold mb-2">Tech Stack:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Photoshop</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Illustrator</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">InDesign</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Adobe Acrobat</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Figma</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Blender</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Kittl</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">ChatGPT</span>
+          </div>   
+         <p class="font-bold mb-2">Skills:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span data-i18n="tag_logo" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Logo design</span>
+            <span data-i18n="tag_brand" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Brand design </span>
+            <span data-i18n="tag_print_ed" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Print & editorial design</span>
+            <span data-i18n="tag_packaging" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Packaging</span>
+            <span data-i18n="tag_prez" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Presentation design</span>
+            <span data-i18n="tag_ad" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Advertisment</span>
+            <span data-i18n="3d_viz" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">3d visualisation</span>
+            <span data-i18n="3d_ai" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">image generation</span>
+          </div>  
+    </div>
+  </div> 
+      </div>
+
+      <div class="reveal d2 bg-zinc-900 text-zinc-900">
+  <button onclick="toggleAccordion(2)" class="w-full flex justify-between items-center py-3 px-4  bg-zinc-900 text-zinc-100">
+    <h4 data-i18n="about_dd2" class="font-medium">// 02  Web and UX/UI</h4>
+    <span id="icon-1" class="text-zinc-100 transition-transform duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+      </svg>
+    </span>
+  </button>
+  <div id="content-2" class="max-h-0 overflow-hidden transition-all bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-700  duration-300 ease-in-out">
+    <div class="pb-5 text-sm mt-4 px-4 text-zinc-900 dark:text-white">
+      <p class="font-bold mb-2">Tech Stack:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Figma</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Figjam</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">HTML/CSS</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Tailwind CSS</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Shopify</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Webflow</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Google analytics</span>
+          </div>  
+      <p class="font-bold mb-2">Skills:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">WSAG 2.0</span>
+            <span data-i18n="tag_flow" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">User flows</span>
+            <span data-i18n="tag_personas" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">User personas</span>
+            <span  class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Wireframing</span>
+            <span data-i18n="tag_proto" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Prototyping</span>
+            <span data-i18n="tag_handoff"class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Design-to-development handoff</span>
+            <span data-i18n="tag_arch" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Information architecture</span>
+            <span data-i18n="tag_resp" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Responsive design</span>
+          </div>       
+    </div>
+  </div> 
+      </div>
+
+      <div class="reveal d2 bg-zinc-900 text-zinc-900">
+  <button onclick="toggleAccordion(3)" class="w-full flex justify-between items-center py-3 px-4  bg-zinc-900 text-zinc-100">
+    <h4 data-i18n="about_dd3" class="font-medium">// 03 Social media</h4>
+    <span id="icon-1" class="text-zinc-100 transition-transform duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+      </svg>
+    </span>
+  </button>
+  <div id="content-3" class="max-h-0 overflow-hidden transition-all bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-700  duration-300 ease-in-out">
+    <div class="pb-5 text-sm mt-4 px-4 text-zinc-900 dark:text-white">
+      <p class="font-bold mb-2">Tech Stack:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Canva</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Capcut</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">After effects</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Meta Business Suite</span>
+          </div>  
+          <p class="font-bold mb-2">Skills:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span data-i18n="tag_social" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Social media templates</span>
+            <span data-i18n="tag_car" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Carousel design</span>
+            <span data-i18n="tag_video" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Short-form video</span>
+            <span data-i18n="tag_motion" class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Motion graphics</span>
+          </div>  
+    </div>
+  </div> 
+      </div>
+
+         <div class="reveal d2 bg-zinc-900 text-zinc-900">
+  <button onclick="toggleAccordion(4)" class="w-full flex justify-between items-center py-3 px-4  bg-zinc-900 text-zinc-100">
+    <h4 data-i18n="about_dd4" class="font-medium">//04 Strategy</h4>
+    <span id="icon-1" class="text-zinc-100 transition-transform duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+      </svg>
+    </span>
+  </button>
+  <div id="content-4" class="max-h-0 overflow-hidden transition-all bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-700  duration-300 ease-in-out">
+    <div class="pb-5 text-sm mt-4 px-4 text-zinc-900 dark:text-white">
+      <p class="font-bold mb-2">Tech Stack:</p>
+          <div class="flex flex-wrap gap-2 mb-4">            
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Miro</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Notion</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Google Analytics</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Google Trends</span>
+            <span class="text-md bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-900 dark:border-zinc-700 px-3 py-1 rounded-full">Slack</span>
+          </div>  
+    </div>
+  </div> 
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="relative py-32 bg-zinc-900 dark:bg-zinc-800 overflow-hidden">
+   <div class="absolute top-0 left-0 w-full h-full">
+      <canvas id ='canv3' class="canv absolute top-0 left-0 w-full h-full"></canvas>
+   </div>
+      <div class="absolute z-10 top-[8px] right-0 lg:-right-[100px] w-[320px] md:w-[520px]">
+      <img src="img\hero image.png" clas="mix-blend-overlay object-fill" aria-hidden="true">
+     </div>
+      <div class="slide-in-left absolute z-10 bottom-[8px] left-0 lg:-left-[100px] w-[320px] md:w-[520px] rotate-180">
+      <img src="img\hero image.png" clas="mix-blend-overlay object-fill" aria-hidden="true">
+     </div>
+      <div class="absolute z-8 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px]">
+      <img src="img\about-circle.png" clas="opacity-5 object-fill" aria-hidden="true">
+     </div>
+      <div class="relative grid justify-center  z-20 gap-2">
+        <div class="mb-6 flex flex-col items-center">
+            <p data-i18n="contacts" class="reveal d2 text-xs font-medium text-white tracking-widest uppercase mb-2 text-center">[contacts]</p>
+            <h2 data-i18n="contacts_h" merge class="reveal font-display font-bold text-4xl md:text-6xl uppercase text-white leading-tight mb-4 text-center">Let's<br>[Connect]</h2>
+            <p data-i18n="contacts_p" class="reveal d2 max-w-[450px] text-center text-white">Feel free to contact me for inquiries or collaboration opportunities down below.</p>
+        </div>
+        <div class="reveal d3 flex flex-wrap gap-4 justify-center">           
+            <a href="mailto:mgrisane@gmail.com" rel="noopener noreferrer" target="_blank"class="shimmer uppercase flex justify-center items-center rounded-full border text-center gap-2 py-4 px-12 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-md">
+              mgrisane@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/madara-gri%C5%A1%C4%81ne/" rel="noopener noreferrer" target="_blank" class="shimmer uppercase flex justify-center items-center rounded-full border text-center gap-2 py-4 px-12 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-md">
+              Linkedin
+            </a>          
+          </div>
+      </div>
+</section>
+
+</main>
+
+<footer class="bg-zinc-900">
+  <div class="max-w-6xl gap-4 mx-auto px-6 py-8">
+    <ul class="flex flex-wrap gap-4 justify-center mb-4">
+      <li><a href="mailto:mgrisane@gmail.com" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-sm uppercase " >mgrisane@gmail.com</a></li>
+      <span class="text-zinc-100">|</span>
+      <li><a href="https://www.linkedin.com/in/madara-gri%C5%A1%C4%81ne/" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-zinc-100 text-sm uppercase " >LinkedIn</a></li>
+    </ul>
+    <div class="flex flex-wrap gap-2 justify-center items-center">
+      <p data-i18n="footer" class="text-sm text-zinc-400 text-center">© <span id="yr"></span> Madara Grišāne. All rights reserved.</p>
+      <a data-i18n="footer_privacy" href="privacy-policy.html" class="block inline-block text-sm text-center text-zinc-400 hover:text-zinc-100 underline">Privacy policy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+function app() {
+  return {
+    dark: false,
+    mm: false,
+    sc: false,
+    s: 'hero',
+
+    init() {
+      // dark mode
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+      // scroll
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 20;
+        this.updateSection();
+      }, { passive: true });
+
+      // reveal
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal','.reveal_left','.reveal_right').forEach(el => io.observe(el));
+
+      // year
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    },
+
+    updateSection() {
+      const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+      if (atBottom) { this.s = 'contact'; return; }
+      const ids = ['contact','about','work','services','hero'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+      }
+    }
+  }
+}
+</script>
+  <script src="glightbox-3.3.0\dist\js\glightbox.js"></script>
+  <script type="text/javascript">
+  const lightbox = GLightbox({ loop: true, });
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{
+  dark: localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches),
+  scrolled: false,
+  mobileMenu: false,
+  progress: 0
+}" :class="{'dark':dark}" x-init="
+  $watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+  window.addEventListener('scroll', () => {
+    scrolled = window.scrollY > 20;
+    progress = Math.min(100, Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100));
+  }, { passive: true });
+" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="404 page not found"/>
+  <meta name="author" content="Madara Grišāne"/>
+  <meta property="og:title" content="404"/>
+  <meta property="og:type" content="article"/>
+  <title>404 page not found</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Mega:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="glightbox-3.3.0\dist\css\glightbox.css"/>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+   
+    extend: {
+      fontFamily: { display: ['Lexend mega','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { accent: '#1F2EE8', 'accent-light': '#1F2EE8' }
+    }
+  }
+}
+</script>
+  <style>
+       *,*::before,*::after{box-sizing:border-box;}
+    html{font-family:'Lexend Mega',sans-serif;}
+    h1,h2,h3,h4,h5,h6{font-family:'Lexend Mega',sans-serif; text-transform:uppercase}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:'accent';border-radius:99px;}
+    body{transition:background-color .3s,color .3s;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+    .nav-link{position:relative;}
+    .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .25s cubic-bezier(.4,0,.2,1);}
+    .nav-link:hover::after{width:100%;}
+    .btn-primary{position:relative;overflow:hidden;}
+    .btn-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1);}
+    .btn-primary:hover::after{left:160%;}
+    [x-cloak]{display:none!important;}
+    .photo-frame{overflow:hidden;background:#ffffff;}
+    .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+
+    /* Reading progress */
+    .progress-bar{position:fixed;top:0;left:0;height:3px;background: currentColor  ;z-index:100;transition:width .1s linear;}
+
+    /* Case study prose */
+    .prose-cs h2{font-family:'Lexend Mega',sans-serif;font-size:2rem;font-weight:700;margin:0 0 0.5rem;line-height:1.25;}
+    .prose-cs h3{font-family:'Lexend Mega',sans-serif;font-size:1.15rem;font-weight:700;margin:1rem 0 .6rem;line-height:1.3;}
+    .prose-cs p{margin:0 0 1.4rem;line-height:1.82;color:#393939;}
+    .dark .prose-cs p{color:#a1a1aa;}
+    .prose-cs ul{margin:0 0 1.4rem 1.5rem;list-style:disc;}
+    .prose-cs li{margin-bottom:.45rem;line-height:1.7;color:#393939;}
+    .dark .prose-cs li{color:#a1a1aa;}
+    .prose-cs blockquote{border-left:3px solid #1F2EE8;padding:.75rem 1.25rem;margin:0 0 1.8rem;background:#f5f4ff;border-radius:0 8px 8px 0;}
+    .dark .prose-cs blockquote{background:#27272a;}
+    .prose-cs blockquote p{color:#393939;font-style:italic;margin:0;}
+    .dark .prose-cs blockquote p{color:#a1a1aa;}
+    .prose-cs hr{border:none;border-top:1px solid #e4e4e7;margin:2.5rem 0;}
+    .dark .prose-cs hr{border-top-color:#27272a;}
+    .prose-cs a{color:#1F2EE8;text-decoration:underline;text-underline-offset:3px;}
+
+    /* Stat card */
+    .stat-card{border-left:3px solid #1F2EE8;}
+
+    /* Image caption */
+    .img-caption{font-size:.8rem;color:#a1a1aa;text-align:center;margin-top:.6rem;}
+
+    /* Step badge */
+    .step-badge{width:2rem;height:2rem;min-width:2rem;border-radius:50%;background:#1F2EE8;color:#fff;font-family:'PT Sans',sans-serif;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;}
+
+    /* card hover */
+    .card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s;}
+    .card-h:hover{transform:translateY(-4px);}
+  </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased">
+
+  <!-- Reading progress bar -->
+  <div class="progress-bar" :style="`width:${progress}%`" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" aria-label="Reading progress"></div>
+
+  <!-- ═══ NAV ═══ -->
+  <header class="fixed top-0.5 left-0 right-0 z-50 transition-all duration-300"
+    :class="scrolled ? 'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5' : 'bg-transparent'">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <a href="index.html" class="font-display font-bold text-xl tracking-tight relative z-10">
+      <p class="text-sm text-zinc-900 dark:text-zinc-100 -mb-1">Madara Grišāne</p>
+    </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <li><a href="index.html#services" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+        <li><a href="index.html#work" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+        <li><a href="index.html#about" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="index.html#contact" class="nav-link uppercase font-bold  text-zinc-900 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <button @click="dark=!dark"
+          class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+          :aria-label="dark ? 'Light mode' : 'Dark mode'">
+          <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </button>
+        <button @click="mobileMenu=!mobileMenu" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
+          <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div x-show="mobileMenu" x-cloak
+      x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      <ul class="flex flex-col px-6 py-4 gap-4 text-sm font-medium" role="list">
+        <li><a href="index.html#services" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Services</a></li>
+        <li><a href="index.html#work" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Work</a></li>
+        <li><a href="index.html#about" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">About</a></li>
+        <li><a href="index.html#contact" @click="mobileMenu=false" class="nl uppercase font-bold text-zinc-900 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-white transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="contact" class="relative py-32 mt-10">
+      <div class="absolute opacity-20 z-8 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px]">
+      <img src="img\about-circle.png" clas=" object-fill ">
+     </div>
+      <div class="relative grid justify-center z-20 gap-2">
+        <div class="mb-6">
+            <h1 class="reveal font-display font-bold text-4xl md:text-6xl uppercase leading-tight mb-4 text-center">[404]<br>page not found</h1>
+        </div>
+        <div class="reveal d3 flex gap-4 justify-center">           
+            <a href="index.html" rel="noopener noreferrer" class="shimmer uppercase flex justify-center items-center rounded-full border text-center gap-2 py-4 px-12 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-md">
+              back to homepage
+            </a>          
+          </div>
+      </div>
+</section>
+
+      </div>
+    </section>
+  </main>
+
+<footer class="bg-zinc-900">
+  <div class="max-w-6xl gap-4 mx-auto px-6 py-8">
+    <ul class="flex flex-wrap gap-4 justify-center mb-4">
+      <li><a href="mailto:mgrisane@gmail.com" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-sm uppercase " >mgrisane@gmail.com</a></li>
+      <span class="text-zinc-100">|</span>
+      <li><a href="https://www.linkedin.com/in/madara-gri%C5%A1%C4%81ne/" rel="noopener noreferrer" target="_blank" class="nl font-semibold text-zinc-100 text-zinc-100 text-sm uppercase " >LinkedIn</a></li>
+    </ul>
+    <div class="flex flex-wrap gap-2 justify-center items-center">
+      <p data-i18n="footer" class="text-sm text-zinc-400 text-center">© <span id="yr"></span> Madara Grišāne. All rights reserved.</p>
+      <a data-i18n="footer_privacy" href="privacy-policy.html" class="block inline-block text-sm text-center text-zinc-400 hover:text-zinc-100 underline">Privacy policy</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+    <script src="glightbox-3.3.0\dist\js\glightbox.js"></script>
+  <script type="text/javascript">
+  const lightbox = GLightbox({ loop: true, });
+</script>
+
+</body>
+</html>
